@@ -222,4 +222,4 @@ various ways privilege escalation can be accomplished by attackers.
 
 5. Host file system is now mounted, cd to root and cat open the root.txt.
 
-6.  Important links: https://dejandayoff.com/the-danger-of-exposing-docker.sock/ && https://blog.natem135.com/posts/thm-sweet-tooth-inc/
+6.  Important links: [dejandayoff](https://dejandayoff.com/the-danger-of-exposing-docker.sock/) && [blog.natem135](https://blog.natem135.com/posts/thm-sweet-tooth-inc/)
