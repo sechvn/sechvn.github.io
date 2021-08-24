@@ -165,7 +165,7 @@ privileges and escape out of the container.
 
 4. Using curl we can list all images by issuing this command: ```  curl -i -s -X GET http://<docker_host>:PORT/containers/json  ```
 
-    Which gives us this result:
+    - Which gives us this result:
 
     ```bash
     ["Id":"3aca3900a312d70b576f0a86856612f8312ad03df5ae14dacb54439b52eafd31","Names":          ["/sweettoothinc"],"Image":"sweettoothinc:latest","ImageID":"sha256:26a697c0d00f06d8ab5cd16669d0b4898f6ad2c19c73c8f5e27231596f5bec5e","Command":"/bin/bash -c 'chmod a+rw /var/run/docker.sock && service ssh start & /bin/su uzJk6Ry98d8C -c '/initializeandquery.sh & /entrypoint.sh influxd''","Created":1627359591,"Ports":[{"IP":"0.0.0.0","PrivatePort":22,"PublicPort":2222,"Type":"tcp"},{"IP":"0.0.0.0","PrivatePort":8086,"PublicPort":8086,"Type":"tcp"}],"Labels":{},"State":"running","Status":"Up About an hour","HostConfig":{"NetworkMode":"default"},"NetworkSettings":{"Networks":{"bridge":{"IPAMConfig":null,"Links":null,"Aliases":null,"NetworkID":"d941570cec4dfc6c39532d4d875bcbdee64a3831e147c75b6167c481bcaf7d67","EndpointID":"bb07c60829d249c61aae7da7dba8fbe3a7738af7a7297d53a26f02787a8240ef","Gateway":"172.17.0.1","IPAddress":"172.17.0.2","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"MacAddress":"02:42:ac:11:00:02","DriverOpts":null}}},"Mounts":[{"Type":"volume","Name":"80ed8feaaed22a73f8debc5905c2af290e39c5e8cd997047bdab5b0b61c67493","Source":"","Destination":"/var/lib/influxdb","Driver":"local","Mode":"","RW":true,"Propagation":""},{"Type":"bind","Source":"/var/run/docker.sock","Destination":"/var/run/docker.sock","Mode":"","RW":true,"Propagation":"rprivate"}]}]
@@ -194,7 +194,7 @@ privileges and escape out of the container.
 
     ```
 
-After running this command we get the first root.txt flag: THM{REDACTED}
+    - After running this command we get the first root.txt flag: THM{REDACTED}
 
 
 ##### SSH forwarding over the docker.sock
