@@ -17,7 +17,7 @@ unless you have permission to do so.
 I won't cover the basics of connecting to a machine on Tryhackme, as they give you everything you need to 
 get started. The first step if you were conducting a penetration test on a target would be information 
 gathering using publicly available sources or OSINT to map out an organization's network and 
-infrastructure. Here we are starting with *Scanning and Enumeration* We are given an IP address of the 
+infrastructure. Here we are starting with *Scanning and Enumeration.* We are given an IP address of the 
 Sweettooth Inc machine. Our first step is to find out the services that are running on each port and 
 whether this is a web application or a server providing another type of service like a file server. To do 
 that we use a tool called Nmap that will scan all available ports on the machine. Nmap is a port scanner 
