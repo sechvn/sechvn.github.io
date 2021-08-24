@@ -31,7 +31,7 @@ run: ``` man nmap ``` in the terminal.
 Nmap scan results using -sV for version detection, -sC for default NSE scripts, -T4 for increased speed, -p- for all ports. Note you can simply run -A, which is aggressive and will run version detection, script 
 scanning, and OS version detection:
 
-**Note: Great place to start for the various different flags and explanation of services is: https://nmap.org/book/man.html**
+**Note: Great place to start for the various different flags and explanation of services is: [nmap](https://nmap.org/book/man.html)**
 
 ```bash
 sudo nmap -sV -sC -T4 -p- 10.10.136.240  
@@ -135,7 +135,7 @@ machine (Attacker) and place the linpeas binary in the directory that the web se
 would use curl or wget and download the binary from within the target machine (Victim). In this case the 
 machine we ssh'd into. What follows is the process I used to manually look for ways to escalate privileges.
 
-*Note: This site does an awesome job of walking you through what to look for to escalate privileges: https://book.hacktricks.xyz/linux-unix/privilege-escalation*
+*Note: This site does an awesome job of walking you through what to look for to escalate privileges: [hacktricks](https://book.hacktricks.xyz/linux-unix/privilege-escalation*)
 
 
 ##### Privilege Escalation:
