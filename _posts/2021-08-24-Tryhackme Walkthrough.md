@@ -3,36 +3,28 @@
 
 ## Introduction:
 
-Approaching your first machine on platforms like Hackthebox.eu and Tryhackme.com can be intimidating. But there are general guidelines you can follow that will
+Approaching your first machine on platforms like Hackthebox.eu and Tryhackme.com can be intimidating. But there are general guidelines you can follow that will help structure your
 
+methodology. These guidelines have been mapped out for us by experts in the penetration testing field. In this tutorial we will attack a medium rated machine on Tryhackme called, 
 
-help structure your methodology. These guidelines have been mapped out for us by experts in the penetration testing field. In this tutorial we will attack a medium 
-
-
-rated machine on Tryhackme called, "Sweettooth, Inc." Never practice these methods on a network unless you have permission to do so. 
+"Sweettooth, Inc." Never practice these methods on a network unless you have permission to do so. 
 
 
 ###  Scanning and Enumeration:
 
-I won't cover the basics of connecting to a machine on Tryhackme, as they give you everything you need to get started. The first step if you were conducting a 
+I won't cover the basics of connecting to a machine on Tryhackme, as they give you everything you need to get started. The first step if you were conducting a penetration test on 
 
+a target would be information gathering using publicly available sources or OSINT to map out an organization's network and infrastructure. Here we are starting with *Scanning and 
 
-penetration test on a target would be information gathering using publicly available sources or OSINT to map out an organization's network and infrastructure. 
+Enumeration* We are given an IP address of the Sweettooth Inc machine. Our first step is to find out the services that are running on each port and whether this is a web 
 
+application or a server providing another type of service like a file server. To do that we use a tool called Nmap that will scan all available ports on the machine. Nmap is a 
 
-Here we are starting with *Scanning and Enumeration* We are given an IP address of the Sweettooth Inc machine. Our first step is to find out the 
+port scanner with additional scripts that will also tell us if there are vulnerable services running on the machine. Nmap has flags that allow us to conduct various types of scans 
 
+in addition to using the NSE scripting engine that will run vulnerability scans against our target. To learn about the different scanning options run: ``` man nmap ``` in the 
 
-services that are running on each port and whether this is a web application or a server providing another type of service like a file server. To do that we use a tool called
-
-
-Nmap that will scan all available ports on the machine. Nmap is a port scanner with additional scripts that will also tell us if there are vulnerable services running on 
-
-
-the machine. Nmap has flags that allow us to conduct various types of scans in addition to using the NSE scripting engine that will run vulnerability scans against 
-
-
-our target. To learn about the different scanning options run: ``` man nmap ``` in the terminal.
+terminal.
 
 
 ##### Nmap Results:
@@ -91,20 +83,14 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 Normally there are several tools we would want to run to further enumerate additional services, vulnerabilities, and specifically directories relating to web applications. 
 
-
 However, we know that we have InfluxDB running and found a username.
 
 *Note: Tools like Nikto, dirbuster, 
 gobuster, wfuzz, burpsuite, zapproxy, sqlmap, crackmapexec, and others assist in further enumerating services and directories depending upon what type of services or applications we find running.*
 
-From an attacker's position these activities would all be considered reconnaissance. There are several models used to describe the steps of a penetration test or an 
+From an attacker's position these activities would all be considered reconnaissance. There are several models used to describe the steps of a penetration test or an attack. 
 
- 
-attack. According to the CEH cert guide the steps are, Reconnaissance, Scanning and Enumeration, Gaining Access, Escalation of Privilege, Maintaining Access, and
-
-
-Covering Tracks.
-
+According to the CEH cert guide the steps are, Reconnaissance, Scanning and Enumeration, Gaining Access, Escalation of Privilege, Maintaining Access, and Covering Tracks.
  
 *Note: I will be going over the tools above in future tutorials related to enumeration and web applications.* 
  
@@ -132,33 +118,26 @@ Covering Tracks.
 
 7. SSH into the machine with -p 2222 for the port and enter the above user and password. Usually, ssh runs on port 22, but it is common practice to assign ssh to another port in an attempt to obfuscate the service. In our terminal we would use this command to connect to the ssh port with the credentials: ``` ssh uzJk6Ry98d8C@10.10.136.240 -p 2222 ``` After executing the command it will ask us for the user's password. 
 
-Success! We are now connected to the target machine. This is where understanding Linux system commands is imperative. We now are in the file system of the machine 
+Success! We are now connected to the target machine. This is where understanding Linux system commands is imperative. We now are in the file system of the machine and need to list 
 
+what files are in the immediate directory: ``` ls -la ``` will list all files including the permissions associated with each file. Doing so reveals a user.txt which we can then 
 
-and need to list what files are in the immediate directory: ``` ls -la ``` will list all files including the permissions associated with each file. Doing so reveals a user.txt 
-
-
-which we can then use the ``` cat  ``` command to print the flag to our terminal: ``` THM{REDACTED} ```
+use the ``` cat  ``` command to print the flag to our terminal: ``` THM{REDACTED} ```
 
 
 ### Gaining Access:
 
-Now that we have connected to our target machine and gained access we need to perform what's called privilege escalation. This is a process where we look for a way to 
+Now that we have connected to our target machine and gained access we need to perform what's called privilege escalation. This is a process where we look for a way to elevate 
 
+permissions to gain root access. In this machine there are two root flags we need to obtain. Privilege Escalation is in its own right a topic that can have an entire book written 
 
-elevate permissions to gain root access. In this machine there are two root flags we need to obtain. Privilege Escalation is in its own right a topic that can have an 
+on it. Thankfully, we have multiple resources found online that can assist us in looking for ways to elevate privileges. There are also tools available that will automate this 
 
+process like linpeas. In order to use a tool like linpeas we would need to start a web server on our machine (Attacker) and place the linpeas binary in the directory that the web 
 
-entire book written on it. Thankfully, we have multiple resources found online that can assist us in looking for ways to elevate privileges. There are also tools available
+server is running in. Then we would use curl or wget and download the binary from within the target machine (Victim). In this case the machine we ssh'd into. What follows is the 
 
-
-that will automate this process like linpeas. In order to use a tool like linpeas we would need to start a web server on our machine (Attacker) and place the linpeas 
-
-
-binary in the directory that the web server is running in. Then we would use curl or wget and download the binary from within the target machine (Victim). In this 
-
-
-case the machine we ssh'd into. What follows is the process I used to manually look for ways to escalate privileges.
+process I used to manually look for ways to escalate privileges.
 
 
 *Note: This site does an awesome job of walking you through what to look for to escalate privileges: https://book.hacktricks.xyz/linux-unix/privilege-escalation*
@@ -166,9 +145,9 @@ case the machine we ssh'd into. What follows is the process I used to manually l
 
 ##### Privilege Escalation:
 
-There are a few things we can check for immediately upon gaining access to our target machine. I usually execute sudo -l to see what the user can run as root on 
+There are a few things we can check for immediately upon gaining access to our target machine. I usually execute sudo -l to see what the user can run as root on the machine. Here 
 
-the machine. Here is a quick list of common things to check for once you gain access:
+is a quick list of common things to check for once you gain access:
 
 - ```  uname -a  ``` *This will give us the Linux kernel version which may have exploits that we can use to escalate privileges.*
 - ```  sudo -l  ``` *As mentioned above this will tell us what the current user can run as root or with sudo privileges.*
@@ -176,13 +155,11 @@ the machine. Here is a quick list of common things to check for once you gain ac
 - ```  find / -perm -u=s -type f  2>/dev/null  ``` *This will show us what binaries have the SUID permission bit set. Visiting this site will tell us what we can do with binaries that have the SUID binary set: https://gtfobins.github.io/*
 - ```  cat /proc/self/cgroup  ```*This command will tell us if we are in a container we could also run (ps aux) to look at processes running and see if the docker.sock daemon is running.*
 
-In this machine the Linux kernel is vulnerable to a few exploits but we also find that we are in a container. But we can't run any docker commands as we don't have 
+In this machine the Linux kernel is vulnerable to a few exploits but we also find that we are in a container. But we can't run any docker commands as we don't have access to 
 
+docker binaries. There are also no SUID binaries we can exploit. My next step was to begin researching about containers which are a type of virtualization. I read if we have 
 
-access to docker binaries. There are also no SUID binaries we can exploit. My next step was to begin researching about containers which are a type of 
-
-
-virtualization. I read if we have access to the docker.sock daemon we can use that to elevate our privileges and escape out of the container.
+access to the docker.sock daemon we can use that to elevate our privileges and escape out of the container.
 
 
 1. To find out where the docker.sock daemon is located we use this command: ```  find / -name docker.sock 2>/dev/null  ```
@@ -225,16 +202,11 @@ curl -i -s -X POST \
 
 ##### SSH forwarding over the docker.sock
 
-Method 2 skips and simplifies the entire process of privilege escalation and container escape. If we use this technique we bypass the need for the above curl 
+Method 2 skips and simplifies the entire process of privilege escalation and container escape. If we use this technique we bypass the need for the above curl commands. I included 
 
+this to show the process I went through and also to show how dangerous it is to expose the docker.sock daemon. Using curl commands we were able to read files that were restricted 
 
-commands. I included this to show the process I went through and also to show how dangerous it is to expose the docker.sock daemon. Using curl commands we were 
-
-
-able to read files that were restricted by access permissions and reinforces the need to understand the various ways privilege escalation can be accomplished 
-
-
-by attackers.
+by access permissions and reinforces the need to understand the various ways privilege escalation can be accomplished by attackers.
 
 
 ##### Commands to forward the docker.sock daemon over our local host to interact with the container using docker commands
