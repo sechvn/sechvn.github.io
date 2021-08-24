@@ -112,7 +112,7 @@ Access, and Covering Tracks.
 
     - ``` select * from ssh ```
 
-6. Upon querying the creds database using the ``` select * from ssh ```, I found this value under the name of "ssh": username: uzJk6Ry98d8C | password: REDACTED
+6. Upon querying the creds database using the ``` select * from ssh ```, I found this value under the name of "ssh" username: uzJk6Ry98d8C \| password: REDACTED
 
 7. SSH into the machine with -p 2222 for the port and enter the above user and password. Usually, ssh runs on port 22, but it is common practice to assign ssh to another port in an attempt to obfuscate the service. In our terminal we would use this command to connect to the ssh port with the credentials: ``` ssh uzJk6Ry98d8C@10.10.136.240 -p 2222 ``` After executing the command it will ask us for the user's password. 
 
