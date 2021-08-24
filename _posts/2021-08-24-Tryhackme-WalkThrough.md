@@ -106,11 +106,11 @@ Access, and Covering Tracks.
 5. For the questions relating to the database that we have connected to through the python exploit the following Influxql statements will give us the answers: 
 *Note: These select statements use the asterisk symbol to represent all data available in the specific table.* 
 
-- ``` select * from water_tank ```  *Then we take the UTC unix timestamp and convert to regular time.*
+``` select * from water_tank ```  *Then we take the UTC unix timestamp and convert to regular time.*
 
-- ``` select * from mixer_stats ```
+``` select * from mixer_stats ```
 
-- ``` select * from ssh ```
+``` select * from ssh ```
 
 6. Upon querying the creds database using the select * from ssh, I found this value under the name of "ssh": username: uzJk6Ry98d8C | password: REDACTED
 
