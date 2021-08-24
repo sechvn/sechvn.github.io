@@ -28,7 +28,7 @@ run: ``` man nmap ``` in the terminal.
 
 ##### Nmap Results:
 
-Nmap scan results using -sV for version detection, -sC for default NSE scripts, -T4 for increased speed, -p- for all ports. Note you can simply run -A which is aggressive and will run version detection, script 
+Nmap scan results using -sV for version detection, -sC for default NSE scripts, -T4 for increased speed, -p- for all ports. Note you can simply run -A, which is aggressive and will run version detection, script 
 scanning, and OS version detection:
 
 **Note: Great place to start for the various different flags and explanation of services is: https://nmap.org/book/man.html**
