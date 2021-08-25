@@ -200,7 +200,7 @@ privileges and escape out of the container.
 ##### SSH forwarding over the docker.sock
 
 Method 2 skips and simplifies the entire process of privilege escalation and container escape. If we use 
-this technique we bypass the need for the above curl commands. I included this to show the process I went t
+this technique we bypass the need for the above curl commands. I included this to show the process I went
 through and also to show how dangerous it is to expose the docker.sock daemon. Using curl commands we were 
 able to read files that were restricted by access permissions and reinforces the need to understand the 
 various ways privilege escalation can be accomplished by attackers.
