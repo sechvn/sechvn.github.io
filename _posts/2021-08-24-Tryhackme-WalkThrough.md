@@ -1,7 +1,7 @@
 ---
 published: true
 ---
-# Sweettooth Inc. Tutorial
+# Sweettooth Inc.
 
 
 ## Introduction:
