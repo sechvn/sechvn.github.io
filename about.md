@@ -12,4 +12,4 @@ Full time Cybersecurity student with an Associates in Network Security and Compu
 
 ### Contact me
 
-[nullbit@sechvn.com](mailto:nullbit@sechvn.com)
+[sechvn@gmail.com](mailto:sechvn@gmail.com)
